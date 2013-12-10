@@ -1,0 +1,55 @@
+Hello World
+
+<h3>Without Session Declarations</h3>
+<% unless current_user %>
+  <%= link_to "LOG IN", new_user_session_path %>
+  <%= link_to "SIGN UP", new_user_registration_path %>
+<% else %>
+  <%= link_to 'LOG OUT', destroy_user_session_path, method: :delete %>
+<% end %>
+
+<h3>With Session Declarations</h3>
+<div class="current-user-hidden">
+  <%= link_to "LOG IN", new_user_session_path %>
+  <%= link_to "SIGN UP", new_user_registration_path %>
+</div>
+<div class="current-user-visible">
+  <%= link_to 'LOG OUT', destroy_user_session_path, method: :delete %>
+</div>
+
+<h4>Pros</h4>
+<ul>
+  <li>
+    Can fully cache many pages on the site,
+      rails stack doesn't get touched except for the initial json request
+  </li>
+  <li>
+    Easy to build on top of, add other parts to the json request to check
+    Roles such as admin, profile photo and account name
+  <li>
+</ul>
+
+<h4>Cons</h4>
+<ul>
+  <li>
+    Can't have specific resource links
+    User account_path instead of users/:id
+  </li>
+  <li>
+    Developers need to keep in mind that the only things that are
+    dynamic are triggered by this or other ajax requests
+  </li>
+  <li>
+    Fairly scalable but will break down when latency of json request
+    lags behind dom getting loaded. At least the content is loaded however
+  </li>
+</ul>
+
+<h4>Appendix</h4>
+
+Flash Notices:
+Pivotal's lovely Cacheable Flash gem
+
+Future:
+Eventually could move to more complicated delivery styles like
+Edge Side includes or loading data via a full JS framework and serialized models

@@ -1,21 +1,30 @@
-Hello World
+<div class="page-header">
+  <h1>
+    User-Aware Dynamic Page Caching with JS<br />
+    <small>Or what you do when scaling and you don't want to rewrite your app</small>
+  </h1>
+</div>
 
 <h3>Without Session Declarations</h3>
+<ul class="nav">
 <% unless current_user %>
-  <%= link_to "LOG IN", new_user_session_path %>
-  <%= link_to "SIGN UP", new_user_registration_path %>
+  <li><%= link_to "LOG IN", new_user_session_path %></li>
+  <li><%= link_to "SIGN UP", new_user_registration_path %></li>
 <% else %>
-  <%= link_to 'LOG OUT', destroy_user_session_path, method: :delete %>
+  <li><%= link_to 'LOG OUT', destroy_user_session_path, method: :delete %></li>
 <% end %>
+</ul>
 
 <h3>With Session Declarations</h3>
-<div class="current-user-hidden">
-  <%= link_to "LOG IN", new_user_session_path %>
-  <%= link_to "SIGN UP", new_user_registration_path %>
-</div>
-<div class="current-user-visible">
-  <%= link_to 'LOG OUT', destroy_user_session_path, method: :delete %>
-</div>
+<ul class="nav">
+  <li class="current-user-hidden">
+    <%= link_to "LOG IN", new_user_session_path %>
+    <%= link_to "SIGN UP", new_user_registration_path %>
+  </li>
+  <li class="current-user-visible">
+    <%= link_to 'LOG OUT', destroy_user_session_path, method: :delete %>
+  </li>
+</ul>
 
 <h4>Pros</h4>
 <ul>
@@ -26,7 +35,11 @@ Hello World
   <li>
     Easy to build on top of, add other parts to the json request to check
     Roles such as admin, profile photo and account name
+  </li>
   <li>
+    Developer Speed.  Once you have your head wrapped around what's happening
+    It's easy to add links with current-user-visible or hidden to pages as they're built
+  </li>
 </ul>
 
 <h4>Cons</h4>
@@ -53,3 +66,5 @@ Pivotal's lovely Cacheable Flash gem
 Future:
 Eventually could move to more complicated delivery styles like
 Edge Side includes or loading data via a full JS framework and serialized models
+
+Code is on github.com/ScotterC/nyc_rb
